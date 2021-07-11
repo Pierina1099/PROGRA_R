@@ -229,7 +229,18 @@ conc1[1:10]
 e) Si la primera medida fue a las 00:00. ¿A qué hora del día se alcanzó la concentración máxima?
 
 ```{r}
+# Creamos una secuencia de datos de fecha con inicio en la hora pedida:
+date1 <- seq(
+  as.POSIXct("2021-01-01 00:00"),
+  length.out = length(conc),
+  by = "5 min"
+)
 
+#Creamos un data frame con los datos de concentracion de plomo y las fechas 
+df03 <- data.frame(conc, date1)
+
+#Consultamos cual es el valor maximo de concentracion y a su vez nos trae el dato de la hora en que fue tomada
+df03[conc == max(conc),]
 ```
 
 ## Parte 2
@@ -295,10 +306,13 @@ t(A)
 **7. Realizar las siguientes operaciones $A + B$, $A - B$, $3B$ y $AB$**
 
 ```{r}
+# dichas opraciones no se pueden realizar ya que las dimensiones de las matrices
+# son diferentes
 #A+B
 #A-B
-#3*B
 #A*B
+3*A
+
 ```
 
 
@@ -426,10 +440,29 @@ vect_diferencia
 - Crear un **plot** con lineas y puntos mostrando las diferencias consecutivas de $CO_2$ en función del tiempo (1960, 1961, etc...), en **negrita**
 - La diferencia de concentración de $CO_2$ entre 2020 y 2019 fue igual a 2.64. Agregar un punto rojo representando esa diferencia al plot ya creado (usar una forma diferente, como `pch=4`)
 
+```{r}
+plot(x = df_co2$year[2:39], y = vect_diferencia, xlab = "Año", ylab = "Variación de CO2",
+     main = "Diferencia de CO2 & tiempo", type = "o", pch = 16)
+```
+```{r}
+plot(x = df_co2$year[2:39], y = vect_diferencia, xlab = "Años", ylab = "Variación de CO2",
+     main = "Diferencia de CO2 & tiempo", type = "o", pch = 16, xlim = c(1960,2020),
+     ylim = c(0,3))
+points(2020, 2.64, pch = 4, col = "red")
+```
+
+
 **14. **
 
 - Lee el archivo `rainfall.csv` como un `data.frame`
 - Calcula e imprime un vector con los nombres de las estaciones donde al menos uno de los meses tiene una precipitación superior a 180mm.
+
+
+```{r}
+
+
+```
+
 
 **15. Manipule los dataframe según se solicite**
 
@@ -443,7 +476,7 @@ data3 <- as_tibble(read.csv("listRaingauge.csv"))
 
 Grupo 4 : MORROPON
 
-``-`{r}
+```{r}
 est <- dplyr::select(data3, NOM_EST, CODIGO) %>% 
   dplyr::filter(NOM_EST == "MORROPON")
 est
@@ -467,10 +500,7 @@ colSums(ppdi[,3])
 b) Calcule la serie de tiempo de precipitación **acumulada mensual** (si el # de días con missing values, en un mes, supera el 10%, la precipitación acumulada mensual será considerado como un **`NA`**).
 
 ```{r}
-ejerc2 <- data2 %>% dplyr::mutate(date = as.Date(date, format = "%d/%m/%Y")) %>% 
-  rename(pp = qc00000235) %>%
-  dplyr::select(date, pp) %>%
-  group_by(date = str_sub(date, 1, 7))
+
   
 ```
 
