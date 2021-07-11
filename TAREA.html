@@ -584,6 +584,20 @@ conc1[1:10]</code></pre>
 <ol start="5" style="list-style-type: lower-alpha">
 <li>Si la primera medida fue a las 00:00. ¿A qué hora del día se alcanzó la concentración máxima?</li>
 </ol>
+<pre class="r"><code># Creamos una secuencia de datos de fecha con inicio en la hora pedida:
+date1 &lt;- seq(
+  as.POSIXct(&quot;2021-01-01 00:00&quot;),
+  length.out = length(conc),
+  by = &quot;5 min&quot;
+)
+
+#Creamos un data frame con los datos de concentracion de plomo y las fechas 
+df03 &lt;- data.frame(conc, date1)
+
+#Consultamos cual es el valor maximo de concentracion y a su vez nos trae el dato de la hora en que fue tomada
+df03[conc == max(conc),]</code></pre>
+<pre><code>##      conc               date1
+## 142 47.34 2021-01-01 11:45:00</code></pre>
 </div>
 <div id="parte-2" class="section level2">
 <h2>Parte 2</h2>
