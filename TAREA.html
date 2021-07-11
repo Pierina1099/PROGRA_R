@@ -770,33 +770,37 @@ co2 = as.vector(means)</code></pre>
 </ul>
 <p><strong>15. Manipule los dataframe según se solicite</strong></p>
 <p>Se tiene el conjuntos de datos de precipitación diaria (período 1980 - 2013) de ciertas estaciones meteorológicas (<strong>raingaugeDataset.csv</strong>), donde cada una de estas están asociadas a un código único (<strong>p.e. qc00000208</strong>). Asimismo, se tiene una lista con los nombres, códigos, coordenadas y elevación de cada una de las estaciones (<strong>listRaingauge.csv</strong>).</p>
-<pre class="r"><code>ppday &lt;- as_tibble(read.csv(&quot;raingaugeDataset.csv&quot;))
-datq &lt;- as_tibble(read.csv(&quot;listRaingauge.csv&quot;))</code></pre>
+<pre class="r"><code>data2 &lt;- as_tibble(read.csv(&quot;raingaugeDataset.csv&quot;))
+data3 &lt;- as_tibble(read.csv(&quot;listRaingauge.csv&quot;))</code></pre>
 <p>Grupo 4 : MORROPON</p>
-<pre class="r"><code>est &lt;- dplyr::select(datq, NOM_EST, CODIGO) %&gt;% 
-  dplyr::filter(NOM_EST == &quot;MORROPON&quot;)
-est</code></pre>
-<pre><code>## # A tibble: 1 x 2
-##   NOM_EST  CODIGO    
-##   &lt;chr&gt;    &lt;chr&gt;     
-## 1 MORROPON qc00000235</code></pre>
-<p>se solicita:</p>
-<ol style="list-style-type: lower-alpha">
-<li>Determine la cantidad de <strong>missing values</strong> de la serie de tiempo a paso diario.</li>
-</ol>
-<pre class="r"><code>ppdi &lt;- ppday %&gt;% 
-  dplyr::mutate(date = as.Date(date, format = &quot;%d/%m/%Y&quot;)) %&gt;% rename(pp = qc00000235) %&gt;%  
-  dplyr::select(date,pp) %&gt;% 
+<p>`<code>-</code>{r} est &lt;- dplyr::select(data3, NOM_EST, CODIGO) %&gt;% dplyr::filter(NOM_EST == “MORROPON”) est</p>
+<pre><code>
+
+se solicita:
+
+a) Determine la cantidad de **missing values** de la serie de tiempo a paso diario.
+
+
+```r
+ppdi &lt;- data2 %&gt;% dplyr::mutate(date = as.Date(date, format = &quot;%d/%m/%Y&quot;)) %&gt;%
+  rename(pp = qc00000235) %&gt;% 
+  dplyr::select(date, pp) %&gt;%
   group_by(date) %&gt;% 
   mutate(missVal = sum(is.na(pp)))
 colSums(ppdi[,3])</code></pre>
 <pre><code>## missVal 
 ##     445</code></pre>
 <ol start="2" style="list-style-type: lower-alpha">
-<li><p>Calcule la serie de tiempo de precipitación <strong>acumulada mensual</strong> (si el # de días con missing values, en un mes, supera el 10%, la precipitación acumulada mensual será considerado como un <strong><code>NA</code></strong>).</p></li>
-<li><p>Determine la cantidad de <strong>missing values</strong> de la serie de tiempo a paso mensual.</p></li>
-<li><p>Cree una función que calcule, a partir de los datos de preicpitación mensual, la <strong>climatología (Ene-Dic)</strong> para el <strong>período 1980-2010</strong>.</p></li>
-<li><p>Poltear (boxplot) la variabilidad de los valores mensuales (Ene-Dic) para el período 1980-2013.</p></li>
+<li>Calcule la serie de tiempo de precipitación <strong>acumulada mensual</strong> (si el # de días con missing values, en un mes, supera el 10%, la precipitación acumulada mensual será considerado como un <strong><code>NA</code></strong>).</li>
+</ol>
+<pre class="r"><code>ejerc2 &lt;- data2 %&gt;% dplyr::mutate(date = as.Date(date, format = &quot;%d/%m/%Y&quot;)) %&gt;% 
+  rename(pp = qc00000235) %&gt;%
+  dplyr::select(date, pp) %&gt;%
+  group_by(date = str_sub(date, 1, 7))</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Determine la cantidad de <strong>missing values</strong> de la serie de tiempo a paso mensual.</li>
+<li>Cree una función que calcule, a partir de los datos de preicpitación mensual, la <strong>climatología (Ene-Dic)</strong> para el <strong>período 1980-2010</strong>.</li>
+<li>Poltear (boxplot) la variabilidad de los valores mensuales (Ene-Dic) para el período 1980-2013.</li>
 </ol>
 </div>
 </div>
