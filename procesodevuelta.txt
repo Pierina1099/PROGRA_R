@@ -1,0 +1,177 @@
+usuario@DESKTOP-AT8RPPQ MINGW64 /d/PIERINA/2021_1/PROGRA_R (main)
+$ git config --global alias.superlog "log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
+
+usuario@DESKTOP-AT8RPPQ MINGW64 /d/PIERINA/2021_1/PROGRA_R (main)
+$ git super log
+git: 'super' is not a git command. See 'git --help'.
+
+The most similar command is
+        superlog
+
+usuario@DESKTOP-AT8RPPQ MINGW64 /d/PIERINA/2021_1/PROGRA_R (main)
+$
+
+
+
+
+
+
+usuario@DESKTOP-AT8RPPQ MINGW64 /d/PIERINA/2021_1/PROGRA_R (main)
+$
+
+usuario@DESKTOP-AT8RPPQ MINGW64 /d/PIERINA/2021_1/PROGRA_R (main)
+$
+
+usuario@DESKTOP-AT8RPPQ MINGW64 /d/PIERINA/2021_1/PROGRA_R (main)
+$
+
+usuario@DESKTOP-AT8RPPQ MINGW64 /d/PIERINA/2021_1/PROGRA_R (main)
+$
+
+usuario@DESKTOP-AT8RPPQ MINGW64 /d/PIERINA/2021_1/PROGRA_R (main)
+$
+
+usuario@DESKTOP-AT8RPPQ MINGW64 /d/PIERINA/2021_1/PROGRA_R (main)
+$ git superlog
+* 29a54a8 - (37 minutes ago) intento 4 - Pierina1099 (HEAD -> main)
+* 6a99abf - (2 hours ago) tercer avance - Pierina1099
+* 6315855 - (3 hours ago) intento 21.36 - Pierina1099 (origin/main)
+* cb866c8 - (4 hours ago) regresando - Pierina1099
+* 959200d - (5 hours ago) intento1 - Pierina1099
+* a9cb079 - (9 hours ago) segunda version - Pierina1099
+* dfc6e6b - (9 days ago) modificacion tarea - Pierina1099
+* 87c4aac - (9 days ago) iniciando tarea - Pierina1099
+* 99ef62e - (9 days ago) archivo R - Pierina1099
+* 302a182 - (9 days ago)  primer intento - Pierina1099
+* c8a9aee - (9 days ago) Initial commit - Pierina1099
+
+usuario@DESKTOP-AT8RPPQ MINGW64 /d/PIERINA/2021_1/PROGRA_R (main)
+$ git status
+On branch main
+Your branch is ahead of 'origin/main' by 2 commits.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   TAREA.Rmd
+        modified:   sem_05.R
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+usuario@DESKTOP-AT8RPPQ MINGW64 /d/PIERINA/2021_1/PROGRA_R (main)
+$ git status
+On branch main
+Your branch is ahead of 'origin/main' by 2 commits.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   TAREA.Rmd
+        modified:   sem_05.R
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+usuario@DESKTOP-AT8RPPQ MINGW64 /d/PIERINA/2021_1/PROGRA_R (main)
+$ git status
+On branch main
+Your branch is ahead of 'origin/main' by 2 commits.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   TAREA.Rmd
+        modified:   TAREA.html
+        modified:   sem_05.R
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+usuario@DESKTOP-AT8RPPQ MINGW64 /d/PIERINA/2021_1/PROGRA_R (main)
+$ git add.
+git: 'add.' is not a git command. See 'git --help'.
+
+The most similar command is
+        add
+
+usuario@DESKTOP-AT8RPPQ MINGW64 /d/PIERINA/2021_1/PROGRA_R (main)
+$ git add .
+
+usuario@DESKTOP-AT8RPPQ MINGW64 /d/PIERINA/2021_1/PROGRA_R (main)
+$ git commit -m "intento 3"
+[main ccf5552] intento 3
+ 3 files changed, 70 insertions(+), 19 deletions(-)
+
+usuario@DESKTOP-AT8RPPQ MINGW64 /d/PIERINA/2021_1/PROGRA_R (main)
+$ git push origin main
+To github.com:Pierina1099/PROGRA_R.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'github.com:Pierina1099/PROGRA_R.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+usuario@DESKTOP-AT8RPPQ MINGW64 /d/PIERINA/2021_1/PROGRA_R (main)
+$ git pull origin main
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (4/4), done.
+remote: Total 4 (delta 2), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (4/4), 1.18 KiB | 3.00 KiB/s, done.
+From github.com:Pierina1099/PROGRA_R
+ * branch            main       -> FETCH_HEAD
+   6315855..e733491  main       -> origin/main
+Removing prueb.txt
+Removing PROGRA_R.Rproj
+Merge made by the 'recursive' strategy.
+ PROGRA_R.Rproj | 13 -------------
+ prueb.txt      |  1 -
+ 2 files changed, 14 deletions(-)
+ delete mode 100644 PROGRA_R.Rproj
+ delete mode 100644 prueb.txt
+
+usuario@DESKTOP-AT8RPPQ MINGW64 /d/PIERINA/2021_1/PROGRA_R (main)
+$ git status
+On branch main
+Your branch is ahead of 'origin/main' by 4 commits.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+
+usuario@DESKTOP-AT8RPPQ MINGW64 /d/PIERINA/2021_1/PROGRA_R (main)
+$ git push origin main
+Enumerating objects: 21, done.
+Counting objects: 100% (18/18), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (13/13), done.
+Writing objects: 100% (13/13), 37.86 KiB | 1.11 MiB/s, done.
+Total 13 (delta 8), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (8/8), completed with 3 local objects.
+To github.com:Pierina1099/PROGRA_R.git
+   e733491..ea53887  main -> main
+
+usuario@DESKTOP-AT8RPPQ MINGW64 /d/PIERINA/2021_1/PROGRA_R (main)
+$ git superlog
+*   ea53887 - (80 seconds ago) Merge branch 'main' of github.com:Pierina1099/PROGRA_R - Pierina1099 (HEAD -> main, origin/main)
+|\
+| * e733491 - (2 hours ago) Delete PROGRA_R.Rproj - Pierina1099
+| * 38cd24b - (3 hours ago) Delete prueb.txt - Pierina1099
+* | ccf5552 - (2 minutes ago) intento 3 - Pierina1099
+* | 29a54a8 - (42 minutes ago) intento 4 - Pierina1099
+* | 6a99abf - (2 hours ago) tercer avance - Pierina1099
+|/
+* 6315855 - (3 hours ago) intento 21.36 - Pierina1099
+* cb866c8 - (5 hours ago) regresando - Pierina1099
+* 959200d - (5 hours ago) intento1 - Pierina1099
+* a9cb079 - (9 hours ago) segunda version - Pierina1099
+* dfc6e6b - (9 days ago) modificacion tarea - Pierina1099
+* 87c4aac - (9 days ago) iniciando tarea - Pierina1099
+* 99ef62e - (9 days ago) archivo R - Pierina1099
+* 302a182 - (9 days ago)  primer intento - Pierina1099
+* c8a9aee - (9 days ago) Initial commit - Pierina1099
+
+usuario@DESKTOP-AT8RPPQ MINGW64 /d/PIERINA/2021_1/PROGRA_R (main)
+$
