@@ -501,6 +501,7 @@ ppdi <- data2 %>% dplyr::mutate(date = as.Date(date, format = "%d/%m/%Y")) %>%
   dplyr::select(date, pp) %>%
   group_by(date) %>% 
   mutate(missVal = sum(is.na(pp)))
+ppdi
 colSums(ppdi[,3])
 ```
 

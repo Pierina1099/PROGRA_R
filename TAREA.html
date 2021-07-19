@@ -851,7 +851,23 @@ est</code></pre>
   dplyr::select(date, pp) %&gt;%
   group_by(date) %&gt;% 
   mutate(missVal = sum(is.na(pp)))
-colSums(ppdi[,3])</code></pre>
+ppdi</code></pre>
+<pre><code>## # A tibble: 12,419 x 3
+## # Groups:   date [12,419]
+##    date          pp missVal
+##    &lt;date&gt;     &lt;dbl&gt;   &lt;int&gt;
+##  1 1980-01-01     0       0
+##  2 1980-01-02     0       0
+##  3 1980-01-03     0       0
+##  4 1980-01-04     0       0
+##  5 1980-01-05     0       0
+##  6 1980-01-06     0       0
+##  7 1980-01-07     0       0
+##  8 1980-01-08     0       0
+##  9 1980-01-09     0       0
+## 10 1980-01-10     0       0
+## # ... with 12,409 more rows</code></pre>
+<pre class="r"><code>colSums(ppdi[,3])</code></pre>
 <pre><code>## missVal 
 ##     445</code></pre>
 <ol start="2" style="list-style-type: lower-alpha">
