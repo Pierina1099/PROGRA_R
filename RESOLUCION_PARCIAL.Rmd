@@ -76,8 +76,18 @@ data1 <- as_tibble(read.csv("mods_clima_uh.csv"))
 a.Calcular la precipitacíon acumulada anual (Valores observados) para la cuenca asignada
 
 ```{r}
-
+ppacmu <- data1 %>% dplyr::select(uh_name, bh_month , bh_pc , bh_esc) %>% 
+  dplyr::filter(uh_name == "Cuenca Tumbes" , bh_esc == "Observado")%>% 
+  summarise(ppacum = sum(bh_pc, na.rm = T))
+ppacmu
 ```
+
+b.Calcular el porcentaje de sesgo (% PBIAS) de los escenarios climàticos(ACCESS, HADGEM2 , MPI) respecto a los datos observados para cada mes ( enero- diciembre) de cada variable, para la cuenca asignada
+
+
+c.De la anterior, ¿Cuàl es el escenario climàtico màs preciso? Fundamente su respuesta.
+
+d.Graficar, con ggplot2, la precipitaciòn (enero a diciembre) observada y modelo climàticos.
 
 ## PARTE 3
 
