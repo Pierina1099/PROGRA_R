@@ -1,0 +1,315 @@
+RESOLUCIÓN\_PARCIAL
+================
+Pierina Isabel Tuanama Satalaya
+2/8/2021
+
+  - [DESARROLLO](#desarrollo)
+      - [PARTE 1](#parte-1)
+      - [Parte 2](#parte-2)
+      - [PARTE 3](#parte-3)
+
+# DESARROLLO
+
+## PARTE 1
+
+**1.Se tiene una variable x (no necesariamente temperatura) que depende
+de la elevacion.Se sabe que entre los 1000 y 3000 esta variable se ve
+reducido en 2 unidades cada 500 metros. Entre los 3000 y 4000 metros,
+varıa en 0.5 unidades, y a una altitud mayor, su valor es constante.Cree
+una funcion que permita obtener el valor de esta variable, ́unicamente
+con el dato de la elevacíon.** **El valor de la variable x a 1000
+metros es de 81.4 unidades**
+
+``` r
+variable <-function(x){
+  if( x== 1000){
+    a = 81.4
+    print(a)
+  } else if ( x %in% 1000:1500){
+    a = 81.4  
+    print(a)
+  } else if ( x %in% 1500:2000){
+    a = 81.4 - 2 
+    print(a)
+  } else if (x %in% 2000:2500) {
+    a = 81.4 - 4
+    print(a)
+  } else if (x %in% 2500:3000){
+    a = 81.4 - 6
+    print(a)
+  } else if (x %in% 3000:3500){
+    a = 81.4 - 8.5
+    print(a)
+  } else if (x %in% 3500:4000){
+    a = 81.4 - 9
+    print(a)
+  } else if (x > 4000){
+    a= 81.4-9
+    print(a)
+  } else {
+    print("coloque un valor mayor o igual a 1000")
+  }
+}
+```
+
+**2. Resolver el sistema de ecuaciones**
+
+\(3a + 2b - 2c = 0\\2a - 1b + 3c = 9\\a + 4b + 2c = -4\)
+
+``` r
+k <- matrix(c(3,2,1,2,-1,4,-2,3,2), ncol=3, nrow=3)
+l <- c(0,9,-4)
+solve(k,l)
+```
+
+    ## [1]  2 -2  1
+
+## Parte 2
+
+**1. A partir del conjunto de datos:**
+
+Primero debemos cargar la data a trabajar
+
+``` r
+library(tidyverse)
+data1 <- as_tibble(read.csv("mods_clima_uh.csv"))
+```
+
+a.Calcular la precipitacíon acumulada anual (Valores observados) para
+la cuenca asignada
+
+``` r
+ppacmu <- data1 %>% dplyr::select(uh_name, bh_month , bh_pc , bh_esc) %>% 
+  dplyr::filter(uh_name == "Cuenca Tumbes" , bh_esc == "Observado")%>% 
+  summarise(ppacum = sum(bh_pc, na.rm = T))
+ppacmu
+```
+
+    ## # A tibble: 1 x 1
+    ##   ppacum
+    ##    <dbl>
+    ## 1   852.
+
+b.Calcular el porcentaje de sesgo (% PBIAS) de los escenarios
+climàticos(ACCESS, HADGEM2 , MPI) respecto a los datos observados para
+cada mes ( enero- diciembre) de cada variable, para la cuenca asignada
+
+``` r
+data5 <- data1 %>% dplyr::select(uh_name, bh_month , bh_pc , bh_esc)%>% 
+  dplyr::filter(uh_name == "Cuenca Tumbes")%>%
+  pivot_wider(names_from = "bh_esc", values_from = "bh_pc")
+library(hydroGOF)
+(OB_ACCES <-pbias(data5$`ACCESS 1.0` , data5$Observado , na.rm = T))
+```
+
+    ## [1] 25.9
+
+``` r
+(OB_HadGE <-pbias(data5$`HadGEM2-ES` , data5$Observado , na.rm = T))
+```
+
+    ## [1] 13.8
+
+``` r
+(OB_MPIEM <-pbias(data5$`MPI-ESM-LR` , data5$Observado , na.rm = T))
+```
+
+    ## [1] -1.5
+
+c.De la anterior, ¿Cuàl es el escenario climàtico màs preciso?
+Fundamente su respuesta.
+
+\-el modelo mejor estiamdo es el MPI-ESM-LR ya que tiene un valor
+cercano a 0 que es el optimo pero su valor negativo nos indica una
+subestimacion del modelo.
+
+d.Graficar, con ggplot2, la precipitaciòn (enero a diciembre) observada
+y modelo climàticos.
+
+``` r
+data4 <- data1 %>% dplyr::select(uh_name, bh_month , bh_pc , bh_esc) %>% 
+  dplyr::filter(uh_name == "Cuenca Tumbes")%>% 
+  rename(Cuenca = uh_name , month = bh_month , pp = bh_pc, Escenario = bh_esc)
+
+ggplot(data4, 
+       mapping = aes(x = month, 
+                     y = pp,
+                     color = Escenario))+
+  geom_line()+
+  geom_point()+
+  scale_x_continuous(
+    breaks = c(1:12),
+    labels = month.abb,
+  )+
+  theme(
+    panel.background = element_rect(fill = "beige"),
+    panel.grid.minor = element_line(linetype = "dotted")
+  )+
+  ggtitle("PRECIPITACION DE ENERO A DICIEMBRE")+
+  labs(x = "Meses", 
+       y = "Precipitación")
+```
+
+![](RESOLUCION_PARCIAL_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+
+## PARTE 3
+
+**1.Se tiene el conjunto de datos de temperatura diaria(periodo 1928 -
+2015 ) de ciertas estaciones metereològicas (temperatureDataset.csv),
+donde cad una de estas estàsn asociadas a un còdigo
+ùnico(p.eqc00000208). Si existen valores iguales a -99.9, considerarlos
+como missing values y convertirlos en NA.**
+
+Se solicita:
+
+a.Determine la cantidad de missing values para los años hidrologicos
+Sep1983-Agos1984 y Sep1997-Agost1998
+
+``` r
+data2 <- as_tibble(read.csv("temperatureDataset.csv", na.strings = -99.9))
+
+data3 <- data2 %>% select(DATE, qc00000805)%>%
+  mutate(DATE = as.Date(DATE, format = "%d/%m/%Y"))%>% 
+  rename(temp = qc00000805)%>% 
+  arrange(DATE)
+
+data3 %>% dplyr::filter(DATE >="1983-09-01" , DATE <="1984-08-31" |DATE >="1997-09-01" , DATE <="1997-09-01") %>% 
+  summarise( miss_invalue =sum(is.na(temp)))
+```
+
+    ## # A tibble: 1 x 1
+    ##   miss_invalue
+    ##          <int>
+    ## 1            1
+
+b.Calcule la serie de tiempo de temperatura mensual ( si el de dias con
+missing values), en un mes, supera el 5%, la temperatura mensual seria
+considerado como un NA) mas, identifique,visualmente, posibles atipicos
+y describa una posible causa.
+
+``` r
+data6 <- data3 %>%  group_by(DATE = str_sub(DATE, 1, 7)) %>% 
+  mutate(missVal = sum(is.na(temp)) * 100 / n()) %>%   
+  summarize(
+    temp = mean(temp , na.rm = T),
+    missVal = unique(missVal)
+    ) %>% 
+  mutate(temp = ifelse(missVal >=5 , NA , temp),
+         DATE = as.Date(sprintf("%1$s-01", DATE)),
+         month= str_sub(DATE, 6, 7)
+         )
+data6
+```
+
+    ## # A tibble: 1,044 x 4
+    ##    DATE        temp missVal month
+    ##    <date>     <dbl>   <dbl> <chr>
+    ##  1 1928-11-01    NA     100 11   
+    ##  2 1928-12-01    NA     100 12   
+    ##  3 1929-01-01    NA     100 01   
+    ##  4 1929-02-01    NA     100 02   
+    ##  5 1929-03-01    NA     100 03   
+    ##  6 1929-04-01    NA     100 04   
+    ##  7 1929-05-01    NA     100 05   
+    ##  8 1929-06-01    NA     100 06   
+    ##  9 1929-07-01    NA     100 07   
+    ## 10 1929-08-01    NA     100 08   
+    ## # ... with 1,034 more rows
+
+``` r
+summary(data6)
+```
+
+    ##       DATE                 temp          missVal          month          
+    ##  Min.   :1928-11-01   Min.   :22.61   Min.   :  0.00   Length:1044       
+    ##  1st Qu.:1950-07-24   1st Qu.:24.78   1st Qu.:  0.00   Class :character  
+    ##  Median :1972-04-16   Median :25.46   Median :  0.00   Mode  :character  
+    ##  Mean   :1972-04-16   Mean   :25.49   Mean   : 28.27                     
+    ##  3rd Qu.:1994-01-08   3rd Qu.:26.21   3rd Qu.:100.00                     
+    ##  Max.   :2015-10-01   Max.   :28.75   Max.   :100.00                     
+    ##                       NA's   :353
+
+``` r
+ggplot()+
+  geom_boxplot(data6 , mapping = aes( x = month , y = temp , color = month))+
+  scale_x_discrete(
+    labels = month.abb,
+  )+theme(
+    panel.background = element_rect(fill = "beige"),
+  )
+```
+
+    ## Warning: Removed 353 rows containing non-finite values (stat_boxplot).
+
+![](RESOLUCION_PARCIAL_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+
+c.Determine la cantidad de missing values de la serie de tiempo a paso
+mensial para los años a 2005 y 2010.
+
+``` r
+data6 %>% dplyr::filter(DATE >="2005-01-01" , DATE <="2010-12-01") %>% 
+  summarise( miss_invalue =sum(is.na(temp)))
+```
+
+    ## # A tibble: 1 x 1
+    ##   miss_invalue
+    ##          <int>
+    ## 1            0
+
+d.Cree una funcion que calcule, a partir de los datos de temperatura
+mensual, la climatologìa (Ene-Dic). Obtener la climatologia para los
+periodos 1980-1995 y 1996-2010.Plotear sus resultados en una sola
+gràfica para describir sus diferencias y/o similitudes (entre
+climatologìas)
+
+``` r
+prueba1 <- function(data,year1,year2){
+  data %>% mutate( año= as.integer(str_sub(DATE, 1,4))) %>% 
+    dplyr::filter(año %in% year1:year2) %>% 
+    group_by(month) %>% 
+    summarise(tempmean =mean(temp,na.rm = T)) %>% 
+    mutate(años = sprintf( "%1s - %1s" , year1 , year2))
+  }
+
+pur <-prueba1(data6,1980,1995)
+par <-prueba1(data6,1996,2010)
+ejer_f <-rbind(pur,par)
+
+ggplot(ejer_f, 
+       mapping = aes(x = month, 
+                     y = tempmean,
+                     group=años,
+                     color= años))+
+  geom_line()+
+  geom_point()+
+  scale_x_discrete(
+    labels = month.abb,
+  )+
+  theme(
+    panel.background = element_rect(fill = "beige"),
+    panel.grid.minor = element_line(linetype = "dotted")
+  )+
+  ggtitle("Climatologia")+
+  labs(x = "Meses", 
+       y = "Temperatura (ºC)")
+```
+
+![](RESOLUCION_PARCIAL_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+
+e.Plotear (boxplot) la variablidad de los valores mensuales (Ene-Dic)
+para el periodo 1980-2013 y describirlo correctamente.
+
+``` r
+ejer_3e <-data6 %>% filter( DATE >="1980-01-01" & DATE <= "2013-12-1")
+ggplot()+
+  geom_boxplot(ejer_3e, mapping = aes( x = month , y = temp , color = month))+
+  scale_x_discrete(
+    labels = month.abb,
+  )+theme(
+    panel.background = element_rect(fill = "beige"),
+  )
+```
+
+    ## Warning: Removed 14 rows containing non-finite values (stat_boxplot).
+
+![](RESOLUCION_PARCIAL_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
