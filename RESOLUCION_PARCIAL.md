@@ -62,7 +62,10 @@ $3a + 2b - 2c  = 0\\2a - 1b + 3c  = 9\\a  + 4b + 2c  = -4$
 k <- matrix(c(3,2,1,2,-1,4,-2,3,2), ncol=3, nrow=3)
 l <- c(0,9,-4)
 solve(k,l)
-#> [1]  2 -2  1
+```
+
+```
+## [1]  2 -2  1
 ```
 
 
@@ -87,10 +90,13 @@ ppacmu <- data1 %>% dplyr::select(uh_name, bh_month , bh_pc , bh_esc) %>%
   dplyr::filter(uh_name == "Cuenca Tumbes" , bh_esc == "Observado")%>% 
   summarise(ppacum = sum(bh_pc, na.rm = T))
 ppacmu
-#> # A tibble: 1 x 1
-#>   ppacum
-#>    <dbl>
-#> 1   852.
+```
+
+```
+## # A tibble: 1 x 1
+##   ppacum
+##    <dbl>
+## 1   852.
 ```
 
 b.Calcular el porcentaje de sesgo (% PBIAS) de los escenarios climàticos(ACCESS, HADGEM2 , MPI) respecto a los datos observados para cada mes ( enero- diciembre) de cada variable, para la cuenca asignada
@@ -102,11 +108,26 @@ data5 <- data1 %>% dplyr::select(uh_name, bh_month , bh_pc , bh_esc)%>%
   pivot_wider(names_from = "bh_esc", values_from = "bh_pc")
 library(hydroGOF)
 (OB_ACCES <-pbias(data5$`ACCESS 1.0` , data5$Observado , na.rm = T))
-#> [1] 25.9
+```
+
+```
+## [1] 25.9
+```
+
+```r
 (OB_HadGE <-pbias(data5$`HadGEM2-ES` , data5$Observado , na.rm = T))
-#> [1] 13.8
+```
+
+```
+## [1] 13.8
+```
+
+```r
 (OB_MPIEM <-pbias(data5$`MPI-ESM-LR` , data5$Observado , na.rm = T))
-#> [1] -1.5
+```
+
+```
+## [1] -1.5
 ```
 
 
@@ -163,10 +184,13 @@ data3 <- data2 %>% select(DATE, qc00000805)%>%
 
 data3 %>% dplyr::filter(DATE >="1983-09-01" , DATE <="1984-08-31" |DATE >="1997-09-01" , DATE <="1997-09-01") %>% 
   summarise( miss_invalue =sum(is.na(temp)))
-#> # A tibble: 1 x 1
-#>   miss_invalue
-#>          <int>
-#> 1            1
+```
+
+```
+## # A tibble: 1 x 1
+##   miss_invalue
+##          <int>
+## 1            1
 ```
 
 
@@ -186,29 +210,41 @@ data6 <- data3 %>%  group_by(DATE = str_sub(DATE, 1, 7)) %>%
          month= str_sub(DATE, 6, 7)
          )
 data6
-#> # A tibble: 1,044 x 4
-#>    DATE        temp missVal month
-#>    <date>     <dbl>   <dbl> <chr>
-#>  1 1928-11-01    NA     100 11   
-#>  2 1928-12-01    NA     100 12   
-#>  3 1929-01-01    NA     100 01   
-#>  4 1929-02-01    NA     100 02   
-#>  5 1929-03-01    NA     100 03   
-#>  6 1929-04-01    NA     100 04   
-#>  7 1929-05-01    NA     100 05   
-#>  8 1929-06-01    NA     100 06   
-#>  9 1929-07-01    NA     100 07   
-#> 10 1929-08-01    NA     100 08   
-#> # ... with 1,034 more rows
+```
+
+```
+## # A tibble: 1,044 x 4
+##    DATE        temp missVal month
+##    <date>     <dbl>   <dbl> <chr>
+##  1 1928-11-01    NA     100 11   
+##  2 1928-12-01    NA     100 12   
+##  3 1929-01-01    NA     100 01   
+##  4 1929-02-01    NA     100 02   
+##  5 1929-03-01    NA     100 03   
+##  6 1929-04-01    NA     100 04   
+##  7 1929-05-01    NA     100 05   
+##  8 1929-06-01    NA     100 06   
+##  9 1929-07-01    NA     100 07   
+## 10 1929-08-01    NA     100 08   
+## # ... with 1,034 more rows
+```
+
+```r
 summary(data6)
-#>       DATE                 temp          missVal          month          
-#>  Min.   :1928-11-01   Min.   :22.61   Min.   :  0.00   Length:1044       
-#>  1st Qu.:1950-07-24   1st Qu.:24.78   1st Qu.:  0.00   Class :character  
-#>  Median :1972-04-16   Median :25.46   Median :  0.00   Mode  :character  
-#>  Mean   :1972-04-16   Mean   :25.49   Mean   : 28.27                     
-#>  3rd Qu.:1994-01-08   3rd Qu.:26.21   3rd Qu.:100.00                     
-#>  Max.   :2015-10-01   Max.   :28.75   Max.   :100.00                     
-#>                       NA's   :353
+```
+
+```
+##       DATE                 temp          missVal          month          
+##  Min.   :1928-11-01   Min.   :22.61   Min.   :  0.00   Length:1044       
+##  1st Qu.:1950-07-24   1st Qu.:24.78   1st Qu.:  0.00   Class :character  
+##  Median :1972-04-16   Median :25.46   Median :  0.00   Mode  :character  
+##  Mean   :1972-04-16   Mean   :25.49   Mean   : 28.27                     
+##  3rd Qu.:1994-01-08   3rd Qu.:26.21   3rd Qu.:100.00                     
+##  Max.   :2015-10-01   Max.   :28.75   Max.   :100.00                     
+##                       NA's   :353
+```
+
+```r
 ggplot()+
   geom_boxplot(data6 , mapping = aes( x = month , y = temp , color = month))+
   scale_x_discrete(
@@ -227,10 +263,13 @@ c.Determine la cantidad de missing values de la serie de tiempo a paso mensial p
 ```r
 data6 %>% dplyr::filter(DATE >="2005-01-01" , DATE <="2010-12-01") %>% 
   summarise( miss_invalue =sum(is.na(temp)))
-#> # A tibble: 1 x 1
-#>   miss_invalue
-#>          <int>
-#> 1            0
+```
+
+```
+## # A tibble: 1 x 1
+##   miss_invalue
+##          <int>
+## 1            0
 ```
 
 
